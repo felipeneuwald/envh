@@ -1,4 +1,4 @@
-// Package envh is a helper for assigning environment variables.
+// Package envh provides convenient helpers to easily retrieve environment variables.
 package envh
 
 import (
