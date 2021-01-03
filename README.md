@@ -1,3 +1,5 @@
+[![](https://github.com/felipeneuwald/envh/workflows/test/badge.svg)](https://github.com/felipeneuwald/envh/actions)
+
 # envh
 Package envh is a helper for assigning environment variables.
 
