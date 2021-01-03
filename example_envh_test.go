@@ -7,54 +7,71 @@ import (
 	"github.com/felipeneuwald/envh"
 )
 
+func ExampleString() {
+	os.Setenv("STRING_KEY", "SomeString")
+
+	s, err := envh.String("STRING_KEY")
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("%T %v\n", s, s)
+
+	// Output: string SomeString
+}
+
+func ExampleMustString() {
+	os.Setenv("STRING_KEY", "SomeString")
+
+	s := envh.MustString("STRING_KEY")
+
+	fmt.Printf("%T %v\n", s, s)
+
+	// Output: string SomeString
+}
+
 func ExampleBool() {
-	os.Setenv("BKEY1", "true")
-	k1, err := envh.Bool("BKEY1")
-	if err != nil {
-		fmt.Println("BKEY1 err:", err)
-	}
-	fmt.Println("BKEY1    :", k1)
+	os.Setenv("BOOL_KEY", "true")
 
-	os.Setenv("BKEY2", "false")
-	k2, err := envh.Bool("BKEY2")
+	b, err := envh.Bool("BOOL_KEY")
 	if err != nil {
-		fmt.Println("BKEY2 err:", err)
+		panic(err)
 	}
-	fmt.Println("BKEY2    :", k2)
 
-	os.Setenv("BKEY3", "TRUE")
-	k3, err := envh.Bool("BKEY3")
-	if err != nil {
-		fmt.Println("BKEY3 err:", err)
-	}
-	fmt.Println("BKEY3    :", k3)
+	fmt.Printf("%T %v\n", b, b)
 
-	k4, err := envh.Bool("BKEY4")
-	if err != nil {
-		fmt.Println("BKEY4 err:", err)
-	}
-	fmt.Println("BKEY4    :", k4)
-
-	// Output:
-	// BKEY1    : true
-	// BKEY2    : false
-	// BKEY3 err: Environment variable BKEY3 is "TRUE"; want "true" or "false"
-	// BKEY3    : false
-	// BKEY4 err: Environment variable BKEY4 is missing
-	// BKEY4    : false
+	// Output: bool true
 }
 
 func ExampleMustBool() {
-	os.Setenv("BKEY1", "true")
-	os.Setenv("BKEY2", "false")
-	os.Setenv("BKEY3", "TRUE")
+	os.Setenv("BOOL_KEY", "true")
 
-	k1 := envh.MustBool("BKEY1")
-	k2 := envh.MustBool("BKEY2")
-	k3 := envh.MustBool("BKEY3")
-	k4 := envh.MustBool("BKEY4")
+	b := envh.MustBool("BOOL_KEY")
 
-	fmt.Println(k1, k2, k3, k4)
+	fmt.Printf("%T %v\n", b, b)
 
-	// Output: true false false false
+	// Output: bool true
+}
+
+func ExampleInt() {
+	os.Setenv("INT_KEY", "9")
+
+	i, err := envh.Int("INT_KEY")
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("%T %v\n", i, i)
+
+	// Output: int 9
+}
+
+func ExampleMustInt() {
+	os.Setenv("INT_KEY", "9")
+
+	i := envh.MustInt("INT_KEY")
+
+	fmt.Printf("%T %v\n", i, i)
+
+	// Output: int 9
 }
