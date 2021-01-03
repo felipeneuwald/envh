@@ -7,6 +7,14 @@ import (
 	"github.com/felipeneuwald/envh"
 )
 
+type stringTestType struct {
+	envDeclare bool
+	envKey     string
+	envValue   string
+	want       string
+	wantErr    bool
+}
+
 type boolTestType struct {
 	envDeclare bool
 	envKey     string
@@ -21,6 +29,15 @@ type intTestType struct {
 	envValue   string
 	want       int
 	wantErr    bool
+}
+
+var stringTest = []stringTestType{
+	{true, "STRING1", "SomeString", "SomeString", false},
+	{true, "STRING2", "Some string", "Some string", false},
+	{true, "STRING3", " ", " ", false},
+	{true, "STRING4", "", "", false},
+	{true, "STRING5", "9", "9", false},
+	{false, "STRING6", "", "", true},
 }
 
 var boolTest = []boolTestType{
@@ -43,6 +60,42 @@ var intTest = []intTestType{
 	{false, "INT4", "", 0, true},
 	{true, "INT5", "SomeString", 0, true},
 	{true, "INT6", "-1", -1, false},
+}
+
+func TestString(t *testing.T) {
+	for _, v := range stringTest {
+		if v.envDeclare {
+			os.Setenv(v.envKey, v.envValue)
+		}
+
+		got, err := envh.String(v.envKey)
+
+		if v.wantErr && err == nil {
+			t.Errorf("String(%q): Was expecting err", v.envKey)
+		}
+
+		if !v.wantErr && err != nil {
+			t.Errorf("String(%q): Wasn't expecting err: %v", v.envKey, err)
+		}
+
+		if got != v.want {
+			t.Errorf("String(%q) = %q; want %q", v.envKey, got, v.want)
+		}
+	}
+}
+
+func TestMustString(t *testing.T) {
+	for _, v := range stringTest {
+		if v.envDeclare {
+			os.Setenv(v.envKey, v.envValue)
+		}
+
+		got := envh.MustString(v.envKey)
+
+		if got != v.want {
+			t.Errorf("MustString(%q) = %q; want %q", v.envKey, got, v.want)
+		}
+	}
 }
 
 func TestBool(t *testing.T) {
