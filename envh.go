@@ -28,7 +28,7 @@ func MustString(s string) string {
 }
 
 // MustStringFatal receives a s string, passes it to func String, and returns the value returned by String.
-// If String returns an error, it prints an error message to stdout and exits by calling
+// If String returns an error, it prints an error message and exits by calling
 // github.com/felipeneuwald/printh ErrFatal.
 func MustStringFatal(s string) string {
 	v, err := String(s)
@@ -64,7 +64,7 @@ func MustBool(s string) bool {
 }
 
 // MustBoolFatal receives a s string, passes it to func Bool, and returns the value returned by Bool.
-// If Bool returns an error, it prints an error message to stdout and exits by calling
+// If Bool returns an error, it prints an error message and exits by calling
 // github.com/felipeneuwald/printh ErrFatal.
 func MustBoolFatal(s string) bool {
 	v, err := Bool(s)
@@ -98,7 +98,7 @@ func MustInt(s string) int {
 }
 
 // MustIntFatal receives a s string, passes it to func Int, and returns the value returned by Int.
-// If Int returns an error, it prints an error message to stdout and exits by calling
+// If Int returns an error, it prints an error message and exits by calling
 // github.com/felipeneuwald/printh ErrFatal.
 func MustIntFatal(s string) int {
 	v, err := Int(s)

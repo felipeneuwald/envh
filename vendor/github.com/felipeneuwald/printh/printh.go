@@ -1,4 +1,8 @@
-// Package printh is a helper for printing standardized messages to stdout.
+/*
+Package printh is a helper for printing standardized messages using the standard library log package.
+
+Since printh uses the package log standard logger, all standard logger options will be inherited.
+*/
 package printh
 
 import (
@@ -7,7 +11,7 @@ import (
 	"runtime"
 )
 
-// Info prints to stdout using log.Printf the string INFO, the package and the function who
+// Info prints using log.Printf the string INFO, the package and the function who
 // called it, and the messages m...
 func Info(m ...interface{}) {
 	pc := make([]uintptr, 15)
@@ -17,7 +21,7 @@ func Info(m ...interface{}) {
 	log.Printf("INFO  [%v] %v", frame.Function, fmt.Sprintln(m...))
 }
 
-// Debug checks if v == true and if it is, prints to stdout using log.Printf the string
+// Debug checks if v == true and if it is, prints using log.Printf the string
 // DEBUG, the package and the function who called it, and the messages m...
 func Debug(v bool, m ...interface{}) {
 	if v {
@@ -29,7 +33,7 @@ func Debug(v bool, m ...interface{}) {
 	}
 }
 
-// Err checks if err != nil and if it is, prints to stdout using log.Printf the string
+// Err checks if err != nil and if it is, prints using log.Printf the string
 // ERR, the package and the function who called it, err, and the messages m...
 func Err(err error, m ...interface{}) {
 	if err != nil {
@@ -41,7 +45,7 @@ func Err(err error, m ...interface{}) {
 	}
 }
 
-// ErrFatal checks if err != nil and if it is, prints to stdout using log.Fatalf the string
+// ErrFatal checks if err != nil and if it is, prints using log.Fatalf the string
 // ERR, the package and the function who called it, err, and the messages m...
 func ErrFatal(err error, m ...interface{}) {
 	if err != nil {
