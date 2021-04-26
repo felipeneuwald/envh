@@ -1,3 +1,0 @@
-# github.com/felipeneuwald/printh v1.0.0
-## explicit
-github.com/felipeneuwald/printh
