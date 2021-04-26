@@ -4,7 +4,7 @@
 # envh
 Package envh provides convenient helpers to easily retrieve environment variables.
 
-The purpose of the library is to be simple and functional. It has functions to retrieve environment variables and assign their values to `string`, `int`, and `bool` types. 
+The purpose of the library is to be simple and functional. It has functions to retrieve environment variables and assign their values to `string`, `int`, and `bool` types. It uses [https://github.com/pkg/errors](https://github.com/pkg/errors) for error handling and [https://github.com/rs/zerolog](https://github.com/rs/zerolog) for logging. 
 
 ## Installation
 `go get github.com/felipeneuwald/envh`
