@@ -6,7 +6,8 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/felipeneuwald/printh"
+	"github.com/pkg/errors"
+	"github.com/rs/zerolog/log"
 )
 
 // String receives a s string and retrieves the value of the environment variable named by s.
@@ -15,7 +16,9 @@ import (
 func String(s string) (string, error) {
 	v, ok := os.LookupEnv(s)
 	if !ok {
-		return "", fmt.Errorf("Environment variable %v is missing", s)
+		err := fmt.Errorf("environment variable %v is missing", s)
+		err = errors.New(err.Error())
+		return "", err
 	}
 	return v, nil
 }
@@ -28,12 +31,11 @@ func MustString(s string) string {
 }
 
 // MustStringFatal receives a s string, passes it to func String, and returns the value returned by String.
-// If String returns an error, it prints an error message and exits by calling
-// github.com/felipeneuwald/printh ErrFatal.
+// If String returns an error, it prints an error message and exits.
 func MustStringFatal(s string) string {
 	v, err := String(s)
 	if err != nil {
-		printh.ErrFatal(err)
+		log.Fatal().Stack().Err(err).Send()
 	}
 	return v
 }
@@ -45,7 +47,9 @@ func MustStringFatal(s string) string {
 func Bool(s string) (bool, error) {
 	v, ok := os.LookupEnv(s)
 	if !ok {
-		return false, fmt.Errorf("Environment variable %v is missing", s)
+		err := fmt.Errorf("environment variable %v is missing", s)
+		err = errors.New(err.Error())
+		return false, err
 	}
 	if v == "true" {
 		return true, nil
@@ -53,7 +57,9 @@ func Bool(s string) (bool, error) {
 	if v == "false" {
 		return false, nil
 	}
-	return false, fmt.Errorf("Environment variable %v is %q; want \"true\" or \"false\"", s, v)
+	err := fmt.Errorf("environment variable %v is %q; want \"true\" or \"false\"", s, v)
+	err = errors.New(err.Error())
+	return false, err
 }
 
 // MustBool receives a s string, passes it to func Bool, and returns the value returned by Bool.
@@ -64,12 +70,11 @@ func MustBool(s string) bool {
 }
 
 // MustBoolFatal receives a s string, passes it to func Bool, and returns the value returned by Bool.
-// If Bool returns an error, it prints an error message and exits by calling
-// github.com/felipeneuwald/printh ErrFatal.
+// If Bool returns an error, it prints an error message and exits.
 func MustBoolFatal(s string) bool {
 	v, err := Bool(s)
 	if err != nil {
-		printh.ErrFatal(err)
+		log.Fatal().Stack().Err(err).Send()
 	}
 	return v
 }
@@ -81,11 +86,14 @@ func MustBoolFatal(s string) bool {
 func Int(s string) (int, error) {
 	v, ok := os.LookupEnv(s)
 	if !ok {
-		return 0, fmt.Errorf("Environment variable %v is missing", s)
+		err := fmt.Errorf("environment variable %v is missing", s)
+		err = errors.New(err.Error())
+		return 0, err
 	}
 	i, err := strconv.Atoi(v)
 	if err != nil {
-		return 0, fmt.Errorf("Environment variable %v; %v", s, err)
+		err = errors.New(err.Error())
+		return 0, err
 	}
 	return i, nil
 }
@@ -98,12 +106,11 @@ func MustInt(s string) int {
 }
 
 // MustIntFatal receives a s string, passes it to func Int, and returns the value returned by Int.
-// If Int returns an error, it prints an error message and exits by calling
-// github.com/felipeneuwald/printh ErrFatal.
+// If Int returns an error, it prints an error message and exits.
 func MustIntFatal(s string) int {
 	v, err := Int(s)
 	if err != nil {
-		printh.ErrFatal(err)
+		log.Fatal().Stack().Err(err).Send()
 	}
 	return v
 }
