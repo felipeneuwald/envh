@@ -92,6 +92,7 @@ func Int(s string) (int, error) {
 	}
 	i, err := strconv.Atoi(v)
 	if err != nil {
+		err = fmt.Errorf("environment variable %v: %v", s, err)
 		err = errors.New(err.Error())
 		return 0, err
 	}
